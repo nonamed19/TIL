@@ -17,7 +17,7 @@ Bash(Unix 계열의 터미널) vs. CMD(Windows 계열의 터미널)
 
 **상대 경로 : 현재 작업하고 있는 디렉토리를 기준으로 계산된 상대적 위치를 작성한 것**
 
-### CLI 기초 문법
+## CLI 기초 문법
 
 [[Linux] 리눅스 CLI 기본 개념과 명령어 정리](https://ittrue.tistory.com/79)
 
