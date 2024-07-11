@@ -33,38 +33,26 @@ CLI : 현재 디렉토리
 
 `touch` : 파일 생성하기
     
-    ```jsx
     touch [-옵션] [이름]
-    ```
     
 `mkdir` : 새로운 디렉토리 생성 (make directories)
-    
-    ```jsx
+       
     mkdir name
-    ```
     
 `ls` : 현재 위치 디렉토리의 리스트 출력 (list)
-    
-    ```jsx
+        
     ls [이름]
-    ```
-    
+
 `cd` : 터미널의 현재 위치 변경 (change directory)
-    
-    ```jsx
+        
     cd
-    ```
     
 `start` : 폴더/파일을 열기
-    
-    ```jsx
+        
     start [이름]
-    ```
     
 `rm` : 디렉토리 또는 파일 삭제 (remove)
-    
-    ```jsx
+        
     rm [-옵션] [이름]
-    ```
     
 ctrl + l : Terminal에서 보이는 line들을 clear

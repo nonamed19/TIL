@@ -40,35 +40,31 @@ ex) Google docs 內 Words
 ## GIT 명령어
 
 - `git init` : 로컬 저장소 설정(초기화). git의 버전 관리를 시작할 디렉토리에서 진행
-    
-    ```git
+    ```
     git init
     ```
-    
-    ![Untitled](./Pictures/example1.png)
-    
-    (master)가 보이는 경우 git의 영역 내에 있다는 뜻임.
-    
-    올바르지 않은 위치에서 git init 명령을 내린 경우, git init 명령을 내린 디렉토리에서 .git (숨긴 항목) 폴더를 삭제
   
-  - git 로컬 저장소 내에 또 다른 git 로컬 저장소를 만들지 말 것
-    - 즉, 이미 git 로컬 저장소인 디렉토리 내부 하단에서 git init 명령어를 다시 입력하지 말 것
-    - git 저장소 안에 git 저장소가 있을 경우 가장 바깥 쪽의 git 저장소가 안쪽의 git 저장소의 변경사항을 추적할 수 없기 때문
+![Untitled](./Pictures/example1.png)
+    
+(master)가 보이는 경우 git의 영역 내에 있다는 뜻임.
+    
+올바르지 않은 위치에서 git init 명령을 내린 경우, git init 명령을 내린 디렉토리에서 .git (숨긴 항목) 폴더를 삭제
+  
+- git 로컬 저장소 내에 또 다른 git 로컬 저장소를 만들지 말 것
+  - 즉, 이미 git 로컬 저장소인 디렉토리 내부 하단에서 git init 명령어를 다시 입력하지 말 것
+  - git 저장소 안에 git 저장소가 있을 경우 가장 바깥 쪽의 git 저장소가 안쪽의 git 저장소의 변경사항을 추적할 수 없기 때문
   
 - `git add` : 변경사항이 있는 파일을 staging area에 추가
-    
-    ```git
+     ```git
     git add [이름]
     ```
     
 - `git add .` : 현재 디렉토리 내 변경사항이 있는 모든 파일을 staging area에 추가
-    
     ```git
     git add .
     ```
     
 - `git commit` : staging area에 있는 파일들을 저장소에 기록. 해당 시점의 버전을 생성하고 변경 이력을 남기는 것
-    
     ```git
     git commit [-m] "메세지"
     ```
@@ -78,7 +74,6 @@ ex) Google docs 內 Words
         - `git config --global [user.name](http://user.name/) "Your Name"`
 - Commit : 변경된 파일들을 저장하는 행위.
 - `git status`: master, commits 관련 현재 상태에 대한 정보를 출력함
-    
     ```git
     git status
     ```
@@ -92,7 +87,6 @@ ex) Google docs 內 Words
         - a.py라는 파일을 `add` 시키면 파일명이 초록색으로 변경함(staging area)
   
 - `git log` : 현재까지 저장된 commit(version)을 출력함
-    
     ```git
     git log
     ```
@@ -100,13 +94,11 @@ ex) Google docs 內 Words
     ![Untitled](./Pictures/example4.png)
     
 - `git log —oneline` : commit 목록 한 줄로 보기
-    
     ```git
     git log --oneline
     ```
 
 - `git remote` : 로컬 저장소에 원격 저장소 추가
-    
     ```git
     git remote add origin remote_repo_url
     ```
@@ -120,21 +112,17 @@ ex) Google docs 內 Words
     ex) https://github.com/nonamed19/git-practice
     
 - `git push` : 원격 저장소에 commit 목록을 업로드
-    
     ```git
     git push origin master
     ```
-    
     - git push는 기존 대비 변경사항(commit)만 원격 저장소에 올라감
     - commit 이력이 없다면 push 할 수 없음
 - `git pull` : 원격 저장소에 있는 변경사항(commit)만을 다운로드
-    
     ```git
     git pull
     ```
     
 - `git clone` : 원격 저장소 전체를 복제(다운로드)
-    
     ```git
     git clone remote_repo_url
     ```
@@ -142,7 +130,6 @@ ex) Google docs 內 Words
     `git clone`으로 받은 프로젝트는 이미 `git init`이 되어 있음
     
 - `git remote -v` : 연결되어 있는 원격 저장소의 리스트를 출력
-    
     ```git
     git remote -v
     ```
