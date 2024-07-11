@@ -2,7 +2,7 @@
 
 ## ⭐GIT : 분산 버전 관리 시스템
 
-리누스 토르발스 : Linux와 분산 버전 관리 시스템인 Git의 창시자
+리누스 토르발스 : git와 분산 버전 관리 시스템인 Git의 창시자
 
 Git 자체는 Github, Gitlab과 관계 없음. 단순 정보 업로드를 위한 공간임
 
@@ -41,7 +41,7 @@ ex) Google docs 內 Words
 
 - `git init` : 로컬 저장소 설정(초기화). git의 버전 관리를 시작할 디렉토리에서 진행
     
-    ```linux
+    ```git
     git init
     ```
     
@@ -57,19 +57,19 @@ ex) Google docs 內 Words
   
 - `git add` : 변경사항이 있는 파일을 staging area에 추가
     
-    ```linux
+    ```git
     git add [이름]
     ```
     
 - `git add .` : 현재 디렉토리 내 변경사항이 있는 모든 파일을 staging area에 추가
     
-    ```linux
+    ```git
     git add .
     ```
     
 - `git commit` : staging area에 있는 파일들을 저장소에 기록. 해당 시점의 버전을 생성하고 변경 이력을 남기는 것
     
-    ```linux
+    ```git
     git commit [-m] "메세지"
     ```
     
@@ -79,7 +79,7 @@ ex) Google docs 內 Words
 - Commit : 변경된 파일들을 저장하는 행위.
 - `git status`: master, commits 관련 현재 상태에 대한 정보를 출력함
     
-    ```linux
+    ```git
     git status
     ```
     
@@ -90,10 +90,10 @@ ex) Google docs 內 Words
         ![Untitled](./Pictures/example3.png)
         
         - a.py라는 파일을 `add` 시키면 파일명이 초록색으로 변경함(staging area)
-        - 
+  
 - `git log` : 현재까지 저장된 commit(version)을 출력함
     
-    ```linux
+    ```git
     git log
     ```
     
@@ -101,13 +101,13 @@ ex) Google docs 內 Words
     
 - `git log —oneline` : commit 목록 한 줄로 보기
     
-    ```linux
+    ```git
     git log --oneline
     ```
 
 - `git remote` : 로컬 저장소에 원격 저장소 추가
     
-    ```linux
+    ```git
     git remote add origin remote_repo_url
     ```
     
@@ -121,7 +121,7 @@ ex) Google docs 內 Words
     
 - `git push` : 원격 저장소에 commit 목록을 업로드
     
-    ```linux
+    ```git
     git push origin master
     ```
     
@@ -129,13 +129,13 @@ ex) Google docs 內 Words
     - commit 이력이 없다면 push 할 수 없음
 - `git pull` : 원격 저장소에 있는 변경사항(commit)만을 다운로드
     
-    ```linux
+    ```git
     git pull
     ```
     
 - `git clone` : 원격 저장소 전체를 복제(다운로드)
     
-    ```linux
+    ```git
     git clone remote_repo_url
     ```
     
@@ -143,7 +143,7 @@ ex) Google docs 內 Words
     
 - `git remote -v` : 연결되어 있는 원격 저장소의 리스트를 출력
     
-    ```linux
+    ```git
     git remote -v
     ```
     
