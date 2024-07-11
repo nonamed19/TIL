@@ -23,13 +23,15 @@ Code block & Inline code block : 일반 텍스트와 달리 해당 프로그래�
 ## 마크다운 문법
 [Basic Syntax / Markdown Guide](https://www.markdownguide.org/basic-syntax/)
 
-**굵게 : ****
+**굵게** : ** 
 
-*기울임 : **
+*기울임* : *
 
 ~~취소선~~ : ~~
 
-Blockquotes(인용문) : >
+<U>밑줄</U> : < U > < /U >
+
+> Blockquotes(인용문) : >
 
 ## 마크다운 외부 사이트
 

@@ -2,9 +2,9 @@
 
 ## ⭐GIT : 분산 버전 관리 시스템
 
-리누스 토르발스 : git와 분산 버전 관리 시스템인 Git의 창시자
+<font style="color : Green">리누스 토르발스 : git와 분산 버전 관리 시스템인 Git의 창시자</font> 
 
-Git 자체는 Github, Gitlab과 관계 없음. 단순 정보 업로드를 위한 공간임
+<font style="color : Fuchsia">Git 자체는 Github, Gitlab과 관계 없음. 단순 정보 업로드를 위한 공간임</font>
 
 버전 관리 : 변화를 기록하고 추적하는 것, 마지막 파일과 변경 사항만 남기기
 
@@ -26,8 +26,8 @@ ex) Google docs 內 Words
 
 원격 저장소 (remote repository) : 로컬이 아닌 컴퓨터 혹은 서버의 저장소
 
-- Working Directory : 실제 작업 중인 파일들이 위치하는 영역
-- Staging Area : Working Directory에서 변경된 파일 중, 다음 버전에 포함시킬 파일들을 선택적으로 추가하거나 제외할 수 있는 준비 영역
+- <font style="color : Orangered">Working Directory</font> : 실제 작업 중인 파일들이 위치하는 영역
+- <font style="color : Green">Staging Area</font> : Working Directory에서 변경된 파일 중, 다음 버전에 포함시킬 파일들을 선택적으로 추가하거나 제외할 수 있는 준비 영역
 - Repository : 버전 이력과 파일들이 영구적으로 저장되는 영역. 모든 버전과 변경 이력이 기록됨
 - 로컬 : 현재 사용자가 직접 접속하고 있는 기기 또는 시스템. 개인 컴퓨터, 노트북, 태블릿 등 사용자가 직접 조작하는 환경 (cf. 온라인)
 
@@ -47,21 +47,21 @@ ex) Google docs 內 Words
     
 (master)가 보이는 경우 git의 영역 내에 있다는 뜻임.
     
-올바르지 않은 위치에서 git init 명령을 내린 경우, git init 명령을 내린 디렉토리에서 .git (숨긴 항목) 폴더를 삭제
+<font style="color : Red">올바르지 않은 위치에서 git init 명령을 내린 경우, git init 명령을 내린 디렉토리에서 .git (숨긴 항목) 폴더를 삭제</font>
   
 - git 로컬 저장소 내에 또 다른 git 로컬 저장소를 만들지 말 것
   - 즉, 이미 git 로컬 저장소인 디렉토리 내부 하단에서 git init 명령어를 다시 입력하지 말 것
   - git 저장소 안에 git 저장소가 있을 경우 가장 바깥 쪽의 git 저장소가 안쪽의 git 저장소의 변경사항을 추적할 수 없기 때문
   
-`git add` : 변경사항이 있는 파일을 staging area에 추가
+`git add` : 변경사항이 있는 파일을 <font style="color : Green">Staging Area</font>에 추가
 
     git add [이름]
     
-`git add .` : 현재 디렉토리 내 변경사항이 있는 모든 파일을 staging area에 추가
+`git add .` : 현재 디렉토리 내 변경사항이 있는 모든 파일을 <font style="color : Green">Staging Area</font>에 추가
 
     git add .
     
-`git commit` : staging area에 있는 파일들을 저장소에 기록. 해당 시점의 버전을 생성하고 변경 이력을 남기는 것
+`git commit` : <font style="color : Green">Staging Area</font>에 있는 파일들을 저장소에 기록. 해당 시점의 버전을 생성하고 변경 이력을 남기는 것
 
     git commit [-m] ["메세지"]
     
@@ -77,11 +77,11 @@ ex) Google docs 內 Words
     
 ![Untitled](./Pictures/example2.png)
 
-- a.py라는 파일에 staging area에 버전이 기록되지 않은 변경 사항이 있는 경우, “Untracked files”라는 status를 출력함.(working directory)
+- <font style="color : Orangered">a.py</font>라는 파일에 Staging Area에 버전이 기록되지 않은 변경 사항이 있는 경우, “Untracked files”라는 status를 출력함.(<font style="color : Orangered">Working Directory</font>)
         
 ![Untitled](./Pictures/example3.png)
         
-- a.py라는 파일을 `add` 시키면 파일명이 초록색으로 변경함(staging area)
+- <font style="color : Green">a.py</font>라는 파일을 `add` 시키면 파일명이 초록색으로 변경함(<font style="color : Green">Staging Area</font>)
 
 `git log` : 현재까지 저장된 commit(version)을 출력함
 
