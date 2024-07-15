@@ -133,5 +133,87 @@ ex) https://github.com/nonamed19/git-practice
 [gitignore.io](https://www.toptal.com/developers/gitignore/)
     
 - Windows, Python, VisualStuodioCode는 PJT 초반에 세팅하기
-    
+
 주의사항 : 이미 git의 관리를 받은 이력이 있는 파일이나 디렉토리는 나중에 gitignore에 작성해도 적용되지 않음 (git rm —cached 명령어를 통해 git 캐시에서 삭제 필요)
+
+`git revert` : 특정 commit을 없었던 일로 만드는 작업(재설정)
+    
+    git revert <commit id>
+    
+- 프로젝트 기록에서 commit을 없었던 일로 처리 후 그 결과를 새로운 commit으로 추가함.
+- 없었던 일로 처리한다는 commit이 추가되어 전체 commit의 개수는 +1.
+- 변경 사항을 안전하게 실행 취소할 수 있도록 도와주는 순방향 실행 취소 작업
+- ⭐git에서 기록이 손실되는 것을 방지하며 기록의 무결성과 협업의 신뢰성을 높임
+
+`git revert` : 추가 명령어
+
+    1. git revert <commit id1> <commit id2> <commit id3>
+    2. git revert <commit id1>..<commit id2>
+    3. git revert --no-edit <commit id>
+    4. git revert --no-commit <commit id>
+    
+`git reset` : 특정 commit으로 되돌아 가고, 해당 commit 이후의 commit은 모두 삭제(되돌리기)
+
+    git reset --option <commit id>
+    
+`git reset` : 추가 명령어, 삭제되는 commit들의 기록을 어떤 영역에 남길 것인지 옵션을 활용해 조정할 수 있음
+
+    git reset --soft # 삭제된 commit의 기록을 staging area에 남김
+    git reset --mixed # 삭제된 commit의 기록을 working directory에 남김(기본 옵션값)
+    git reset --hard # 삭제된 commit의 기록을 남기지 않음
+    
+- `git reset —soft`
+    
+    ![Untitled](./Pictures/example6.png)
+    
+- `git reset —mixed`
+    
+    ![Untitled](./Pictures/example7.png)
+    
+- `git reset —hard`
+    
+    ![Untitled](./Pictures/example8.png)
+    
+`git reflog` : HEAD가 이전에 가리켰던 모든 commit을 보여줌. `reset`의 `—hard` 옵션을 통해 지워진 commit도 `reflog`로 조회하여 복구 가능
+
+    git reflog ...
+
+`git restore` : working directory에서 파일을 수정한 뒤, 파일의 수정 사항을 취소하고, 원래 모습대로 되돌리는 작업
+
+    git restore <file>
+
+- 해당 작업은 원래 파일을 덮어쓰는 원리이기 때문에 수정한 내용은 전부 사라짐. (내용 복원 불가)
+    
+`git rm —cached` : staging area에서 working directory로 되돌리기(remove)
+- git 저장소에 commit이 없는 경우
+
+        git rm --cached <file>
+
+`git restore —staged` : staging area에서 working directory로 되돌리기
+- git 저장소에 commit이 존재하는 경우
+
+        git restore --staged <file>
+
+`git commit` 수정하기 : 불필요한 commit을 생성하지 않고, 직전 commit을 수정할 수 있기 때문에 git에서 꼭 필요한 기능 중 하나임.
+
+    git commit --amend
+
+1. `git commit` 직전 commit의 메세지 수정
+    
+    ![Untitled](./Pictures/example9.png)
+    
+2. `git commit` 직전 commit 항목 수정 
+    
+    ![Untitled](./Pictures/example10.png)
+
+
+# Vim
+vi 호환 텍스트 편집기며, 키보드로만 조작이 가능함. VS Code의 원조격.
+
+입력 모드 : 명령 모드에서 I 키를 입력
+![Untitled](./Pictures/example11.png)
+
+명령 모드 : 입력 모드에서 esc 키를 입력
+![Untitled](./Pictures/example12.png)
+
+Vim 종료 : shift + ; 입력 후 wq (write+quit) 입력
