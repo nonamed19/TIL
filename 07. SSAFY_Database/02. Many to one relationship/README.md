@@ -266,3 +266,335 @@ admin.site.register(Comment)
     ```python
     {{ article.comment_set.count }}
     ```
+    
+
+### 모델 관계 설정 - Article & User
+
+```python
+from django.conf import settings
+
+class Article(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=10)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
+
+- User 외래 키 정의
+    
+    
+    |  | `get_user_model()` | `settings.AUTH_USER_MODEL` |
+    | --- | --- | --- |
+    | 반환 값 | `User Object` (객체) | `‘accounts.User’` (문자열) |
+    | 사용 위치 | `models.py`가 아닌 다른 모든 위치 | `models.py` |
+
+### 게시글 CREATE
+
+```python
+# articles/forms.py
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = ('title', 'content',)
+```
+
+- User 모델에 대한 외래 키 데이터 입력을 받지 않도록 ArticleForm 출력 필드 설정
+
+```python
+# articles/views.py
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
+            return redirect('articles:detail', article.pk)
+    else:
+        ...
+```
+
+- 게시글 작성 시 작성자 정보가 함께 저장될 수 있도록 `save`의 `commit` 옵션 활용
+
+### 게시글 READ
+
+```python
+# articles/index.html
+
+{% for article in articles %}
+  <p>작성자 : {{ article.user }}</p>
+  <p>글 번호: {{ article.pk }}</p>
+  <a href="{% url "articles:detail" article.pk %}">
+    <p>글 제목: {{ article.title }}</p>
+  </a>
+  <p>글 내용: {{ article.content }}</p>
+  <hr>
+{% endfor %}
+```
+
+```python
+# articles/detail.html
+
+<h1>Detail</h1>
+<h3>{{ article.pk }}번째 글</h3>
+<hr>
+<p>작성자 : {{ article.user }}</p>
+<p>제목: {{ article.title }}</p>
+<p>내용: {{ article.content }}</p>
+<p>작성일: {{ article.created_at }}</p>
+<p>수정일: {{ article.updated_at }}</p>
+```
+
+- 각 게시글의 작성자 이름 출력
+
+### 게시글 UPDATE
+
+```python
+# articles/views.py
+
+@login_required
+def update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.user == article.user:
+        if request.method == 'POST':
+            form = ArticleForm(request.POST, instance=article)
+            if form.is_valid():
+                form.save()
+                return redirect('articles:detail', article.pk)
+        else:
+            form = ArticleForm(instance=article)
+    else:
+        return redirect('articles:index')
+    context = {
+        'article': article,
+        'form': form,
+    }
+    return render(request, 'articles/update.html', context)
+```
+
+- 게시글 수정 요청 사용자와 게시글 작성 사용자를 비교하여 본인의 게시글만 수정 할 수 있도록 하기
+
+```python
+# articles/detail.html
+
+{% if request.user == article.user %}
+  <a href="{% url "articles:update" article.pk %}">UPDATE</a><br>
+  <form action="{% url "articles:delete" article.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="DELETE">
+  </form>
+{% endif %}
+```
+
+- 해당 게시글의 작성자가 아니라면, 수정/삭제 버튼을 출력하지 않도록 하기
+
+### 게시글 DELETE
+
+```python
+# articles/views.py
+
+@login_required
+def delete(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.user == article.user:
+        article.delete()
+    return redirect('articles:index')
+```
+
+- 삭제를 요청하려는 사람과 게시글을 작성한 사람을 비교하여 본인의 게시글만 삭제 할 수 있도록 하기
+
+### 모델 관계 설정 - Comment & User
+
+```python
+# articles/models.py
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
+
+- User 외래 키 정의
+
+### 댓글 CREATE
+
+```python
+# articles/views.py
+
+def comments_create(request, pk):
+    article = Article.objects.get(pk=pk)
+    comment_form = CommentForm(request.POST)
+    if comment_form.is_valid():
+        comment = comment_form.save(commit=False)
+        comment.article = article
+        comment.user = request.user
+        comment.save()
+        return redirect('articles:detail', article.pk)
+    ...
+```
+
+- 댓글 작성 시 작성자 정보가 함께 저장할 수 있도록 작성
+
+### 댓글 READ
+
+```python
+# articles/detail.html
+
+{% for comment in comments %}
+  <li>
+    {{ comment.user}} - {{ comment.content }}
+		...
+	</li>
+{% endfor %}
+```
+
+- 댓글 출력 시 댓글 작성자와 함께 출력
+
+### 댓글 DELETE
+
+```python
+# articles/views.py
+
+def comments_delete(request, article_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('articles:detail', article_pk)
+```
+
+- 댓글 삭제 요청 사용자와 댓글 작성 사용자를 비교하여 본인의 댓글만 삭제할 수 있도록 하기
+
+```python
+# articles/detail.html
+
+{% for comment in comments %}
+  <li>
+    {{ comment.user}} - {{ comment.content }}
+    {% if request.user == comment.user %}
+      <form action="{% url "articles:comments_delete" article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="DELETE">
+      </form>
+    {% endif %}
+  </li>
+{% empty %}
+  <p>댓글이 없어요..</p>
+{% endfor %}
+```
+
+- 해당 댓글의 작성자가 아니라면, 댓글 삭제 버튼을 출력하지 않도록 함
+
+### View decorators
+
+View 함수의 동작을 수정하거나 추가 기능을 제공하는 데 사용되는 Python 데코레이터
+
+→ 코드의 재사용성을 높이고 뷰 로직을 간결하게 유지
+
+### Allowed HTTP methods
+
+특정 HTTP method로만 View 함수에 접근할 수 있도록 제한하는 데코레이터
+
+- 지정되지 않은 HTTP method로 요청이 들어오면 `HttpResponseNotAllowed (405)`를 반환
+- 대문자로 HTTP method를 지정
+
+`require_http_methods([”METHOD1”, “METHOD2”, …])` : 지정된 HTTP method만 허용
+
+```python
+from django.views.decorators.http import require_http_methods
+
+@require_http_methods(['GET', 'POST'])
+def func(request):
+	pass
+```
+
+`require_safe()` : GET과 HEAD method만 허용
+
+```python
+from django.views.decorators.http import require_safe
+
+@require_safe
+def func(request):
+	pass
+```
+
+`require_POST()` : POST method만 허용
+
+```python
+from django.views.decorators.http import require_POST
+
+@require_POST
+def func(request):
+	pass
+```
+
+[`require_GET` 대신 `require_safe`를 권장하는 주요 이유]
+
+웹 표준을 준수하고,
+
+더 넓은 범위의 클라이언트와 호환되며,
+
+안전한 HTTP 메소드만을 허용하는 view 함수를 구현할 수 있음
+
+### ERD(Entity-Relationship Diagram)
+
+데이터베이스의 구조를 시각적으로 표현하는 도구
+
+Entity(개체), 속성, 그리고 엔티티 간의 관계를 그래픽 형태로 나타내어 시스템의 논리적 구조를 모델링하는 다이어그램
+
+![image.png](./Pictures/image%20(1).png)
+
+- 데이터베이스 설계의 핵심 도구
+- 시각적 모델링으로 효과적인 의사소통 지원
+- 실제 시스템 개발 전 데이터 구조 최적화에 중요
+
+### ERD 구성 요소
+
+엔티티(Entity) : 데이터베이스에 저장되는 객체나 개념
+
+- ex) 고객, 주문, 제품
+
+속성(Attribute) : 엔티티의 특성이나 성질
+
+- ex) 고객(이름, 주소, 전화번호)
+
+관계(Relationship) : 엔티티 간의 연관성
+
+- ex) 고객이 ‘주문’한 제품
+
+Cardinality : 한 엔티티와 다른 엔티티 간의 수적 관계를 나타내는 표현
+
+- 일대일 (one-to-one, 1:1)
+- 다대일 (many-to-one, N:1)
+- 다대다 (many-to-many, M:N)
+
+![image.png](./Pictures/image%20(2).png)
+
+### ERD 제작 사이트
+
+https://app.diagrams.net/
+
+https://www.erdcloud.com/
+
+---
+
+### 추가 기능 구현
+
+[인증된 사용자만 댓글 작성 및 삭제]
+
+```python
+# articles/views.py
+
+@login_required
+def comments_create(request, pk):
+	pass
+
+@login_required
+def comments_delete(request, article_pk, comment_pk):
+	pass
+```
